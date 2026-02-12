@@ -32,6 +32,11 @@ jobs:
         with:
           name: export-log
           path: export.log
+      - name: Upload exported site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: exported-site
+          path: ./out
       - name: Upload exported out directory
         uses: actions/upload-artifact@v4
         with:
