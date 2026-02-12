@@ -22,8 +22,16 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run web:build
-      - name: Export static site
-        run: npm run web:export
+      - name: Run export and capture log
+        run: |
+          set -o pipefail
+          npm run web:export 2>&1 | tee export.log || true
+        shell: bash
+      - name: Upload export log
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-log
+          path: export.log
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
