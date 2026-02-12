@@ -32,6 +32,11 @@ jobs:
         with:
           name: export-log
           path: export.log
+      - name: Upload exported out directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: out-artifact
+          path: ./out
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
