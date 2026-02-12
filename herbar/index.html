@@ -1,0 +1,11 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Herbář — statický fallback</title>
+<h1>Herbář — seznam bylinek (fallback)</h1>
+<ul id="list"></ul>
+<script>
+  fetch('./data/herbs.json').then(r=>r.json()).then(herbs=>{
+    const ul=document.getElementById('list');
+    herbs.forEach(h=>{ const li=document.createElement('li'); li.textContent=h.name; ul.appendChild(li);});
+  }).catch(()=>{ document.getElementById('list').textContent='Nelze načíst data.'});
+</script>
