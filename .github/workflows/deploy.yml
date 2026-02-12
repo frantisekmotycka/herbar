@@ -42,6 +42,24 @@ jobs:
         with:
           name: out-artifact
           path: ./out
+      - name: Add fallback static index for /herbar
+        run: |
+          mkdir -p out/herbar/data
+          cp data/herbs.json out/herbar/data/herbs.json || true
+          cat > out/herbar/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <title>Herbář — statický fallback</title>
+          <h1>Herbář — seznam bylinek (fallback)</h1>
+          <ul id="list"></ul>
+          <script>
+            fetch('./data/herbs.json').then(r=>r.json()).then(herbs=>{
+              const ul=document.getElementById('list');
+              herbs.forEach(h=>{ const li=document.createElement('li'); li.textContent=h.name; ul.appendChild(li);});
+            }).catch(()=>{ document.getElementById('list').textContent='Nelze načíst data.'});
+          </script>
+          HTML
+        shell: bash
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
