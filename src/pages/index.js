@@ -1,6 +1,4 @@
 import Link from 'next/link'
-import fs from 'fs'
-import path from 'path'
 import { useState, useMemo } from 'react'
 import HerbCard from '../../components/HerbCard'
 import SearchBar from '../../components/SearchBar'
@@ -61,6 +59,8 @@ export default function Home({ herbs }) {
 }
 
 export async function getStaticProps() {
+  const fs = require('fs')
+  const path = require('path')
   const dataPath = path.join(process.cwd(), 'data', 'herbs.json')
   const raw = fs.readFileSync(dataPath, 'utf8')
   const herbs = JSON.parse(raw)

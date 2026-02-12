@@ -1,5 +1,4 @@
-import fs from 'fs'
-import path from 'path'
+// `fs` and `path` are only needed server-side inside data-loading functions
 import Image from 'next/image'
 const { sanitizeHtml } = require('../../../lib/sanitizeHtml')
 
@@ -87,6 +86,8 @@ export default function HerbDetail({ herb }) {
 }
 
 export async function getStaticPaths() {
+  const fs = require('fs')
+  const path = require('path')
   const dataPath = path.join(process.cwd(), 'data', 'herbs.json')
   const raw = fs.readFileSync(dataPath, 'utf8')
   const herbs = JSON.parse(raw)
@@ -95,6 +96,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  const fs = require('fs')
+  const path = require('path')
   const dataPath = path.join(process.cwd(), 'data', 'herbs.json')
   const raw = fs.readFileSync(dataPath, 'utf8')
   const herbs = JSON.parse(raw)
